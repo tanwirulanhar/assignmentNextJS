@@ -1,0 +1,60 @@
+1. Import Libraries
+    Pertama, kita mengimpor Axios dan fungsi useEffect serta useState dari React.
+
+    import axios from "axios";
+    import { useEffect, useState } from "react";
+
+2. Komponen DaftarProduk
+
+    const DaftarProduk = () => {
+        const [data, setData] = useState([]);
+
+    DaftarProduk adalah komponen functional yang menggunakan React Hooks 
+    (useState untuk mengelola state data dan setData untuk mengubahnya).
+    data digunakan untuk menyimpan hasil data dari API yang akan diambil.
+    setData adalah fungsi yang digunakan untuk mengubah nilai dari data.
+
+3. Penggunaan useEffect
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get("https://api-bootcamp.do.dibimbing.id/api/v1/foods", {
+                    headers: {
+                        apiKey: "w05KkI9AWhKxzvPFtXotUva-",
+                    },
+                });
+                setData(res.data);
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect digunakan untuk mengeksekusi kode pada saat komponen DaftarProduk dimount ke dalam DOM.
+    Di dalam useEffect, kita mendefinisikan fungsi fetchData yang merupakan async function untuk melakukan pengambilan data dari API.
+    axios.get digunakan untuk melakukan HTTP GET request ke URL API yang ditentukan (https://api-bootcamp.do.dibimbing.id/api/v1/foods).
+    Headers API (apiKey) ditambahkan sebagai bagian dari konfigurasi request dengan menggunakan opsi kedua dari axios.get.
+    Setelah mendapatkan respons dari API (res), kita mengambil res.data (data aktual dari respons API) dan menyimpannya ke dalam state data menggunakan setData.
+    Jika terjadi kesalahan selama proses pengambilan data (misalnya, jaringan terputus atau kesalahan server), kita menangkap error tersebut dengan catch dan mencetak pesan kesalahan ke konsol.
+
+4. Render Hasil Data
+
+    return (
+        <div>
+            <h1>{JSON.stringify(data)}</h1>
+        </div>
+    );
+
+
+    Di dalam return statement, kita hanya menampilkan data dalam format JSON yang sudah diubah menjadi string menggunakan JSON.stringify(data).
+    Ini digunakan sebagai contoh sederhana untuk menunjukkan hasil data yang telah diambil dari API. Biasanya, Anda akan mengolah data ini lebih lanjut 
+    dan menampilkan dalam bentuk yang lebih terstruktur di dalam komponen JSX.
+
+
+    Ringkasan :
+    Kode di atas adalah contoh sederhana penggunaan Axios di dalam aplikasi React (khususnya Next.js dalam kasus ini) untuk mengambil data dari sebuah API. Penggunaan useEffect memastikan bahwa pengambilan data hanya dilakukan 
+    satu kali setelah komponen dimount, dan penggunaan useState untuk mengelola state memungkinkan perubahan data dapat memicu pembaruan UI secara otomatis. Jika Anda menggunakan kode ini, pastikan untuk mengganti "w05KkI9AWhKxzvPFtXotUva-" 
+    dengan apiKey yang sesuai dengan API yang Anda akses.
